@@ -690,7 +690,15 @@ writeout(FILE ** ffp, struct buffer *bp, char *fn)
 	lpend = bp->b_headp;
 	eobnl = 0;
 	if (llength(lback(lpend)) != 0) {
-		eobnl = eyorn("No newline at end of file, add one");
+		if (nlateofmode == NL_EOF_PROMPT) {
+			eobnl = eyorn("No newline at end of file, add one");
+		}
+		else if (nlateofmode == NL_EOF_ALWAYS) {
+			eobnl = TRUE;
+		}
+		else if (nlateofmode == NL_EOF_NEVER) {
+			eobnl = FALSE;
+		}
 		if (eobnl != TRUE && eobnl != FALSE)
 			return (eobnl); /* abort */
 	}

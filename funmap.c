@@ -204,6 +204,7 @@ static struct funmap functnames[] = {
 #endif /* REGEX */
 	{setcasereplace, "set-case-replace", 0},
 	{set_default_mode, "set-default-mode", 1},
+	{set_newline_at_eof_mode, "set-newline-at-eof-mode", 1},
 	{setfillcol, "set-fill-column", 1},
 	{setmark, "set-mark-command", 0},
 	{setprefix, "set-prefix-string", 1},

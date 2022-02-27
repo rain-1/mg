@@ -22,6 +22,8 @@ int	 defb_nmodes = 0;
 struct maps_s	*defb_modes[PBMODES] = { &fundamental_mode };
 int	 defb_flag = 0;
 
+int  nlateofmode = NL_EOF_PROMPT;
+
 int
 changemode(int f, int n, char *newmode)
 {
@@ -170,5 +172,36 @@ set_default_mode(int f, int n)
 			defb_flag |= BFNOTAB;
 	}
 #endif	/* NOTAB */
+	return (TRUE);
+}
+
+// Assumes buf has size at least 8
+//
+// Check if the input is "prompt", "always", or "never".
+// defaults to prompt.
+int
+name_newline_at_eof_mode(char *buf)
+{
+	if (!strncmp("always", buf, 8))
+		return NL_EOF_ALWAYS;
+	else if (!strncmp("never", buf, 8))
+		return NL_EOF_NEVER;
+	else
+		return NL_EOF_PROMPT;
+}
+
+int
+set_newline_at_eof_mode(int f, int n)
+{
+	char	 modebuf[32], *bufp;
+
+	if ((bufp = eread("Set Newline At EOF Mode: ", modebuf, sizeof(modebuf),
+	    EFNEW)) == NULL)
+		return (ABORT);
+	else if (bufp[0] == '\0')
+		return (FALSE);
+	
+	nlateofmode = name_newline_at_eof_mode(modebuf);
+
 	return (TRUE);
 }

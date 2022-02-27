@@ -330,6 +330,13 @@ struct varentry {
 SLIST_HEAD(vhead, varentry);
 
 /*
+ * Newline at EOF modes.
+ */
+#define	NL_EOF_PROMPT 0
+#define NL_EOF_ALWAYS 1
+#define NL_EOF_NEVER 2
+
+/*
  * Previously from ttydef.h
  */
 #define STANDOUT_GLITCH			/* possible standout glitch	*/
@@ -689,6 +696,7 @@ int		 notabmode(int, int);
 #endif	/* NOTAB */
 int		 overwrite_mode(int, int);
 int		 set_default_mode(int,int);
+int		 set_newline_at_eof_mode(int,int);
 
 #ifdef REGEX
 /* re_search.c X */
@@ -786,6 +794,7 @@ extern int		 tceeol;
 extern int		 tcinsl;
 extern int		 tcdell;
 extern int		 rptcount;	/* successive invocation count */
+extern int		 nlateofmode;
 
 /* https://github.com/hboetes/mg/issues/7#issuecomment-475869095 */
 #if defined(__APPLE__) || defined(__NetBSD__)
